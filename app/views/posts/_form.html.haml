@@ -1,0 +1,30 @@
+%p#notice= notice
+- @post.tags.build
+= form_for @post, :html => { :multipart => true } do |f|
+  - if @post.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@post.errors.count, "error")
+        prohibited this post from being saved:
+      %ul
+        - @post.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :title
+    %br/
+    = f.text_field :title
+  .field
+    = f.label :content
+    %br/
+    = f.text_area :content
+  .field
+    = f.file_field :image
+  %h2 Tags
+  = render :partial => 'tags/form', |
+    :locals => {:form => f}         |
+  .actions
+    = f.submit

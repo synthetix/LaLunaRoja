@@ -1,0 +1,19 @@
+- if admin?
+  = link_to 'New Post', new_post_path
+- @posts.each do |post|
+  %h1= post.name
+  %h2= post.title
+  %p= post.content
+  %p= image_tag post.image.url
+  .comments_qty
+    = post.comments.count
+    - if post.comments.count == 1
+      comment
+    - else
+      comments
+  - if admin?
+    .actions
+      = link_to 'Show', post
+      = link_to 'Edit', edit_post_path(post)
+      = link_to 'Delete', post, :confirm => 'Are you sure?', :method => :delete
+%br/
